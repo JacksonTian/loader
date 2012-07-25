@@ -1,0 +1,4 @@
+loader
+======
+
+Assets loader.
