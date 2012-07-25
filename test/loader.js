@@ -27,7 +27,7 @@ describe("Asset loader", function () {
     loader.done().should.equal('<script src="/hehe"></script>\n' +
       '<script src="/heihei"></script>\n' +
       '<link rel="stylesheet" href="/hehe.css" media="all" />\n');
-    loader.done("pro", "version").should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+    loader.done("production", "version").should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
       '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
   });
 
@@ -53,7 +53,7 @@ describe("Asset loader", function () {
     Loader.scan(str).should.eql([
       {
         min: '/assets/scripts/index.min.js',
-        assets: [ '/assets/scripts/index.js' ] 
+        assets: [ '/assets/scripts/index.js' ]
       },
       {
         min: '/assets/scripts/jqueryplugin.min.js',
@@ -66,7 +66,7 @@ describe("Asset loader", function () {
 
     Loader.scanDir(path.join(__dirname, "views")).should.eql([
       { min: '/assets/styles/common.min.css',
-        assets: 
+        assets:
          [ '/assets/styles/reset.css',
            '/assets/styles/common.css',
            '/assets/styles/site_nav.css',
