@@ -1,0 +1,22 @@
+{
+  "name": "loader",
+  "version": "0.0.1",
+  "description": "Assets loader.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "Loader"
+  ],
+  "dependencies": {
+    "uglify-js": "=1.3.2",
+    "clean-css": "=0.4.2" 
+  },
+  "devDependencies": {
+    "mocha": ">=0.14.1",
+    "should": ">=0.6.0"
+  },
+  "author": "Jackson Tian",
+  "license": "MIT"
+}
