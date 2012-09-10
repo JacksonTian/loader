@@ -27,10 +27,11 @@ describe("Asset loader", function () {
     loader.done().should.equal('<script src="/hehe"></script>\n' +
       '<script src="/heihei"></script>\n' +
       '<link rel="stylesheet" href="/hehe.css" media="all" />\n');
-    process.env.NODE_ENV = 'production';
+    var nodeEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = 'production'
     loader.done("version").should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
       '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = nodeEnv;
   });
 
   it("CDNMap", function () {
@@ -41,10 +42,11 @@ describe("Asset loader", function () {
     loader.script.assets.should.eql(['/hehe', '/heihei']);
     loader.css("/hehe.css");
     loader.style.assets.should.eql(['/hehe.css']);
+    var nodeEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = 'production';
     loader.done("version", {'/assets/scripts/jqueryplugin.min.js': 'http://a.bcdn.com/jqueryplugin.min.js'}).should.equal('<script src="http://a.bcdn.com/jqueryplugin.min.js"></script>\n' +
       '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
-    process.env.NODE_ENV = 'test';
+    process.env.NODE_ENV = nodeEnv;
   });
 
   it('scanView', function () {
