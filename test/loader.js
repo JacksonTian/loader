@@ -27,8 +27,24 @@ describe("Asset loader", function () {
     loader.done().should.equal('<script src="/hehe"></script>\n' +
       '<script src="/heihei"></script>\n' +
       '<link rel="stylesheet" href="/hehe.css" media="all" />\n');
-    loader.done("production", "version").should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+    process.env.NODE_ENV = 'production';
+    loader.done("version").should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
       '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+    process.env.NODE_ENV = 'test';
+  });
+
+  it("CDNMap", function () {
+    var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+    loader.js("/hehe");
+    loader.script.assets.should.eql(['/hehe']);
+    loader.js("/heihei");
+    loader.script.assets.should.eql(['/hehe', '/heihei']);
+    loader.css("/hehe.css");
+    loader.style.assets.should.eql(['/hehe.css']);
+    process.env.NODE_ENV = 'production';
+    loader.done("version", {'/assets/scripts/jqueryplugin.min.js': 'http://a.bcdn.com/jqueryplugin.min.js'}).should.equal('<script src="http://a.bcdn.com/jqueryplugin.min.js"></script>\n' +
+      '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+    process.env.NODE_ENV = 'test';
   });
 
   it('scanView', function () {
@@ -40,7 +56,7 @@ describe("Asset loader", function () {
     '  \n' +
     '  {%- Loader("/assets/scripts/index.min.js")\n' +
     '  .js("/assets/scripts/index.js")\n' +
-    '  .done(env, version) %}\n' +
+    '  .done(version) %}\n' +
     '  {%- Loader("/assets/scripts/jqueryplugin.min.js", "/assets/styles/jqueryplugin.min.css")\n' +
     '  .js("/assets/scripts/lib/jquery.jmodal.js")\n' +
     '  .js("/assets/scripts/lib/jquery.mousewheel.min.js")\n' +
