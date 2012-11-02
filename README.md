@@ -8,12 +8,13 @@ Node静态资源加载器。该模块通过两个步骤配合完成，代码部�
 # Usage
 ## Installation
 
-```
+```bash
 npm install loader
 ```
+
 ## Example
 
-```
+```html
 <%- Loader("/assets/scripts/jqueryplugin.min.js", "/assets/styles/jqueryplugin.min.css")
   .js("/assets/scripts/lib/jquery.jmodal.js")
   .js("/assets/scripts/lib/jquery.mousewheel.min.js")
@@ -21,10 +22,11 @@ npm install loader
   .css("/assets/styles/jquery.autocomplate.css")
   .done(env, version) %>
 ```
+
 ### 线上输出
 线上模式将会输出合并和压缩后的地址，该地址从Loader构造参数中得到。  
 
-```
+```html
 <script src="/assets/scripts/jqueryplugin.min.js?version=version"></script>
 <link rel="stylesheet" href="/assets/styles/jqueryplugin.min.css?version=version" media="all" />
 ```
@@ -32,7 +34,7 @@ npm install loader
 ### 线下输出
 线下模式输出为原始的文件地址。
 
-```
+```html
 <script src="/assets/scripts/lib/jquery.jmodal.js"></script>
 <script src="/assets/scripts/lib/jquery.mousewheel.min.js"></script>
 <script src="/assets/scripts/lib/jquery.tagsphere.min.js"></script>
@@ -54,7 +56,8 @@ npm install loader
 从指定目录扫描Loader的调用，返回一个扫描得到的合并压缩关系数组。这个关系数组最终将用于生成合并压缩的文件。  
 `folder`：扫描的目录  
 `return`：
-```
+
+```js
 [
   {min: "x.min.js", assets:["path1", "path2"]},
   {min: "x.min.css", assets:["path1", "path2"]}
@@ -67,4 +70,4 @@ npm install loader
 `justCombo`：如果此参数为true，将不会通过uglify进行编译压缩，仅进行合并，多用于调试线上bug用。
 
 # License
-MIT license
+[MIT license](https://github.com/TBEDP/loader/blob/master/MIT-License)
