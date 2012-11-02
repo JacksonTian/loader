@@ -1,4 +1,4 @@
-var Loader = require('../lib/loader');
+var Loader = require('../');
 var should = require('should');
 var path = require('path');
 var fs = require('fs');
@@ -90,7 +90,16 @@ describe("Asset loader", function () {
            '/assets/styles/site_nav.css',
            '/assets/styles/color.css',
            '/assets//styles/jquery.autocomplete.css' ]
-      }]);
+      },
+      { min: '/assets/styles/hoho.min.css',
+        assets:
+         [ '/assets/styles/reset.css',
+           '/assets/styles/common.css',
+           '/assets/styles/site_nav.css',
+           '/assets/styles/color.css',
+           '/assets//styles/jquery.autocomplete.css' ]
+      }
+    ]);
   });
 
   it("uglify/CSS should work well", function () {
@@ -115,6 +124,12 @@ describe("Asset loader", function () {
     Loader.minify(path.join(__dirname, "assets"), arr);
     fs.readFileSync(minJS, 'utf-8').should.equal("(function(e,t,n,r){})(),function(e,t,n,r){}()");
     fs.readFileSync(minCSS, 'utf-8').should.equal(".foo{float:left}.bar{float:left}");
+
+    Loader.minify(path.join(__dirname, "assets"), arr, true);
+    fs.readFileSync(minJS, 'utf-8').should.equal("(function (a, b, c, d) {}());\n(function (a, b, c, d) {}());\n");
+    var minCSS = fs.readFileSync(minCSS, 'utf-8');
+    minCSS.should.include('.bar {');
+    minCSS.should.include('.foo {');
   });
 
 });
