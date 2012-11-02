@@ -3,6 +3,8 @@ loader [![Build Status](https://secure.travis-ci.org/TBEDP/loader.png?branch=mas
 
 Node静态资源加载器。该模块通过两个步骤配合完成，代码部分根据环境生成标签。上线时，需要调用minify方法进行静态资源的合并和压缩。
 
+* jscoverage: [100%](http://fengmk2.github.com/coverage/loader.html)
+
 # Usage
 ## Installation
 

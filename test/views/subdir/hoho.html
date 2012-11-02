@@ -1,0 +1,22 @@
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+     Remove this if you use the .htaccess -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="description" content="淘宝指数, 淘宝消费者数据研究平台" />
+<meta name="author" content="shu@taobao.com" />
+<title>{%- locals.title ? locals.title + ' - ' : '' %}淘宝指数 - 淘宝消费者数据研究平台</title>
+<script src="/assets/scripts/common.min.js?v={%-version%}"></script>
+<script>
+  var App = new Scape();
+</script>
+<link rel="search" type="application/opensearchdescription+xml" href="/assets/opensearch.xml" title="淘宝指数" />
+{%- Loader('/assets/styles/hoho.min.css')
+  .css('/assets/styles/reset.css')
+  .css('/assets/styles/common.css')
+  .css('/assets/styles/site_nav.css')
+  .css('/assets/styles/color.css')
+  .css('/assets//styles/jquery.autocomplete.css')
+  .done()
+%}
+{% if (locals.viewname) { %}
+<link rel="stylesheet" href="/assets/styles/{%- viewname %}.min.css?v={%-version%}" media="all" />
+{% } %}

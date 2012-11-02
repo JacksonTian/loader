@@ -1,4 +1,5 @@
 lib-cov
+coverage.html
 *.seed
 *.log
 *.csv
@@ -13,3 +14,4 @@ results
 
 node_modules
 npm-debug.log
+test/assets/min.*
