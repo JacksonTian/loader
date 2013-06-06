@@ -15,7 +15,7 @@ describe("Asset loader", function () {
     loader.style.should.have.property("min", "/assets/scripts/jqueryplugin.min.css");
   });
 
-  it("js/css", function (){
+  it("js/css", function () {
     var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
     loader.js("/hehe");
     loader.script.assets.should.eql(['/hehe']);
@@ -23,10 +23,17 @@ describe("Asset loader", function () {
     loader.script.assets.should.eql(['/hehe', '/heihei']);
     loader.css("/hehe.css");
     loader.style.assets.should.eql(['/hehe.css']);
-    loader.done().should.match(/<script src="\/hehe?v=[\d]*"><\/script>\\n<script src="\/heihei?v=[\d]*"><\/script>\\n<link rel="stylesheet" href="\/hehe.css?v=[\d]*" media="all" \/>\\n/);
+    var output = loader.done();
+    output.should.match(/<script src="\/hehe\?v=\d{13}"><\/script>/);
+    output.should.match(/<script src="\/heihei\?v=\d{13}"><\/script>/);
+    output.should.match(/<link rel="stylesheet" href="\/hehe.css\?v=\d{13}" media="all" \/>/);
     var nodeEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = 'production';
-    loader.done("version").should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+    var map = {
+      '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+      '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+    };
+    loader.done(map).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
       '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
     process.env.NODE_ENV = nodeEnv;
   });
@@ -41,8 +48,13 @@ describe("Asset loader", function () {
     loader.style.assets.should.eql(['/hehe.css']);
     var nodeEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = 'production';
-    loader.done("version", {'/assets/scripts/jqueryplugin.min.js': 'http://a.bcdn.com/jqueryplugin.min.js'}).should.equal('<script src="http://a.bcdn.com/jqueryplugin.min.js"></script>\n' +
-      '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+    var map = {
+      '/assets/scripts/jqueryplugin.min.js': 'http://a.bcdn.com/jqueryplugin.min.hash.js',
+      '/assets/scripts/jqueryplugin.min.css': 'http://a.bcdn.com/jqueryplugin.min.hash.css',
+    };
+    var output = loader.done(map);
+    output.should.equal('<script src="http://a.bcdn.com/jqueryplugin.min.hash.js"></script>\n' +
+      '<link rel="stylesheet" href="http://a.bcdn.com/jqueryplugin.min.hash.css" media="all" />\n');
     process.env.NODE_ENV = nodeEnv;
   });
 
@@ -59,7 +71,6 @@ describe("Asset loader", function () {
     '  {%- Loader("/assets/scripts/jqueryplugin.min.js", "/assets/styles/jqueryplugin.min.css")\n' +
     '  .js("/assets/scripts/lib/jquery.jmodal.js")\n' +
     '  .js("/assets/scripts/lib/jquery.mousewheel.min.js")\n' +
-    //'  .async("/woca")' +
     '  .js("/assets/scripts/lib/jquery.tagsphere.min.js")\n' +
     '  .css("/hehe")\n' +
     '  .done() %}\n' +
@@ -74,7 +85,8 @@ describe("Asset loader", function () {
         min: '/assets/scripts/jqueryplugin.min.js',
         assets: [ '/assets/scripts/lib/jquery.jmodal.js',
            '/assets/scripts/lib/jquery.mousewheel.min.js',
-           '/assets/scripts/lib/jquery.tagsphere.min.js' ] },
+           '/assets/scripts/lib/jquery.tagsphere.min.js' ]
+      },
       { min: '/assets/styles/jqueryplugin.min.css',
         assets: [ '/hehe' ] }
     ]);
@@ -105,29 +117,27 @@ describe("Asset loader", function () {
   });
 
   it("minify should work well", function () {
-    var arr = [{"min": "min.js", "assets": ["hehe.js", "ganma.js"]}, {"min": "min.css", "assets": ["hehe.css", "ganma.css"]}];
-    var minJS = path.join(__dirname, "assets/min.js");
-    var minCSS = path.join(__dirname, "assets/min.css");
-    var existsSync = fs.existsSync || path.existsSync;
-    if (existsSync(minJS)) {
-      fs.unlinkSync(minJS);
-    }
-    existsSync(minJS).should.be.false;
-    if (existsSync(minCSS)) {
-      fs.unlinkSync(minCSS);
-    }
-    existsSync(minCSS).should.be.false;
+    var arr = [{"min": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]}, {"min": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}];
+    var minified = Loader.minify(__dirname, arr);
+    minified.should.eql([ { min: '/assets/min.js',
+    assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
+    hash: '/assets/min.b37ac035.js' },
+  { min: '/assets/min.css',
+    assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
+    hash: '/assets/min.b7a2275c.css' } ]);
 
-    Loader.minify(path.join(__dirname, "assets"), arr);
+    var map = Loader.map(minified);
+    var minJS = path.join(__dirname, map["/assets/min.js"]);
+    var minCSS = path.join(__dirname, map["/assets/min.css"]);
+
     fs.readFileSync(minJS, 'utf-8').should.equal("(function(e,t,n,r){})(),function(e,t,n,r){}()");
     fs.readFileSync(minCSS, 'utf-8').should.equal(".foo{float:left}.bar{float:left}");
 
-    Loader.minify(path.join(__dirname, "assets"), arr, true);
+    Loader.minify(__dirname, arr, true);
     fs.readFileSync(minJS, 'utf-8').should.equal("(function (a, b, c, d) {}());\n(function (a, b, c, d) {}());\n");
-    var minCSS = fs.readFileSync(minCSS, 'utf-8');
-    minCSS.should.include('.bar {');
-    minCSS.should.include('.foo {');
+    var css = fs.readFileSync(minCSS, 'utf-8');
+    css.should.include('.bar {');
+    css.should.include('.foo {');
   });
-
 });
 

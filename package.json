@@ -1,6 +1,6 @@
 {
   "name": "loader",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Assets loader.",
   "main": "index.js",
   "scripts": {

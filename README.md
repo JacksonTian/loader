@@ -22,6 +22,25 @@ npm install loader
   .css("/assets/styles/jquery.autocomplate.css")
   .done(env, version) %>
 ```
+### 环境判别
+环境判别由如下代码实现：
+
+```
+process.env.NODE_ENV === 'production'
+```
+设置环境：
+
+```
+# 生产环境
+export NODE_ENV="production"
+# 开发环境
+export NODE_ENV="dev"
+```
+可切换进`example`目录运行示例代码：
+
+```
+npm start
+```
 
 ### 线上输出
 线上模式将会输出合并和压缩后的地址，该地址从Loader构造参数中得到。  
@@ -40,6 +59,9 @@ npm install loader
 <script src="/assets/scripts/lib/jquery.tagsphere.min.js"></script>
 <link rel="stylesheet" href="/assets/styles/jquery.autocomplate.css" media="all" />
 ```
+
+## 流程
+![流程](./figures/flow.png)
 
 ## API
 ### Loader(mincss, minjs)
