@@ -5,7 +5,6 @@ var fs = require('fs');
 
 // console.log(Loader.minify(path.join(__dirname, "../"), Loader.scanDir(path.join(__dirname, "../views"))));
 describe("Asset loader", function () {
-  
   it("Constructor", function () {
     var loader = new Loader("/assets/scripts/jqueryplugin.min.js");
     loader.script.should.have.property("min", "/assets/scripts/jqueryplugin.min.js");
@@ -24,11 +23,9 @@ describe("Asset loader", function () {
     loader.script.assets.should.eql(['/hehe', '/heihei']);
     loader.css("/hehe.css");
     loader.style.assets.should.eql(['/hehe.css']);
-    loader.done().should.equal('<script src="/hehe"></script>\n' +
-      '<script src="/heihei"></script>\n' +
-      '<link rel="stylesheet" href="/hehe.css" media="all" />\n');
+    loader.done().should.match(/<script src="\/hehe?v=[\d]*"><\/script>\\n<script src="\/heihei?v=[\d]*"><\/script>\\n<link rel="stylesheet" href="\/hehe.css?v=[\d]*" media="all" \/>\\n/);
     var nodeEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'production'
+    process.env.NODE_ENV = 'production';
     loader.done("version").should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
       '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
     process.env.NODE_ENV = nodeEnv;
