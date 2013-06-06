@@ -15,3 +15,7 @@ results
 node_modules
 npm-debug.log
 test/assets/min.*
+
+assets.json
+*.min.*.js
+*.min.*.css
