@@ -137,14 +137,19 @@ describe("Asset loader", function () {
   });
 
   it("minify should work well", function () {
-    var arr = [{"min": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]}, {"min": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}];
+    var arr = [
+      {"min": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]},
+      {"min": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}
+    ];
     var minified = Loader.minify(__dirname, arr);
-    minified.should.eql([ { min: '/assets/min.js',
-    assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
-    hash: '/assets/min.b37ac035.js' },
-  { min: '/assets/min.css',
-    assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
-    hash: '/assets/min.b7a2275c.css' } ]);
+    minified.should.eql([
+      { min: '/assets/min.js',
+        assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
+        hash: '/assets/min.f0aad5f6.js' },
+      { min: '/assets/min.css',
+        assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
+        hash: '/assets/min.89e7d785.css' }
+    ]);
 
     var map = Loader.map(minified);
     var minJS = path.join(__dirname, map["/assets/min.js"]);
@@ -152,12 +157,30 @@ describe("Asset loader", function () {
 
     fs.readFileSync(minJS, 'utf-8').should.equal("(function(e,t,n,r){})(),function(e,t,n,r){}()");
     fs.readFileSync(minCSS, 'utf-8').should.equal(".foo{float:left}.bar{float:left}");
+  });
 
-    Loader.minify(__dirname, arr, true);
+  it("minify should work well with justCombo", function () {
+    var arr = [
+      {"min": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]},
+      {"min": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}
+    ];
+    var minified = Loader.minify(__dirname, arr, true);
+    minified.should.eql([
+      { min: '/assets/min.js',
+        assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
+        hash: '/assets/min.b37ac035.js' },
+      { min: '/assets/min.css',
+        assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
+        hash: '/assets/min.b7a2275c.css' }
+    ]);
+
+    var map = Loader.map(minified);
+    var minJS = path.join(__dirname, map["/assets/min.js"]);
+    var minCSS = path.join(__dirname, map["/assets/min.css"]);
+
     fs.readFileSync(minJS, 'utf-8').should.equal("(function (a, b, c, d) {}());\n(function (a, b, c, d) {}());\n");
     var css = fs.readFileSync(minCSS, 'utf-8');
     css.should.include('.bar {');
     css.should.include('.foo {');
   });
 });
-
