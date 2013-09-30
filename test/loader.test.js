@@ -171,7 +171,7 @@ describe("Asset loader", function () {
         hash: '/assets/min.b37ac035.js' },
       { min: '/assets/min.css',
         assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
-        hash: '/assets/min.b7a2275c.css' }
+        hash: '/assets/min.3d380b61.css' }
     ]);
 
     var map = Loader.map(minified);
