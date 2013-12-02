@@ -1,6 +1,6 @@
 {
   "name": "loader",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Assets loader.",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "url": "git://github.com/TBEDP/loader.git"
   },
   "dependencies": {
-    "uglify-js": "=1.3.2",
-    "clean-css": "=0.4.2" 
+    "uglify-js": "=2.4.6",
+    "clean-css": "=2.0.2"
   },
   "devDependencies": {
     "mocha": ">=0.14.1",

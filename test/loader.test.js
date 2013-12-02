@@ -132,7 +132,7 @@ describe("Asset loader", function () {
   });
 
   it("uglify/CSS should work well", function () {
-    Loader.transformScript("(function (a, b, c, d) {}());").should.equal("(function(e,t,n,r){})()");
+    Loader.transformScript("(function (a, b, c, d) {console.log('hello world!');}());").should.equal('!function(){console.log("hello world!")}();');
     Loader.transformStyle(".foo {  float: left;}").should.equal(".foo{float:left}");
   });
 
@@ -145,18 +145,18 @@ describe("Asset loader", function () {
     minified.should.eql([
       { min: '/assets/min.js',
         assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
-        hash: '/assets/min.f0aad5f6.js' },
+        hash: '/assets/min.9b080a0d.js' },
       { min: '/assets/min.css',
         assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
-        hash: '/assets/min.89e7d785.css' }
+        hash: '/assets/min.bd86c426.css' }
     ]);
 
     var map = Loader.map(minified);
     var minJS = path.join(__dirname, map["/assets/min.js"]);
     var minCSS = path.join(__dirname, map["/assets/min.css"]);
 
-    fs.readFileSync(minJS, 'utf-8').should.equal("(function(e,t,n,r){})(),function(e,t,n,r){}()");
-    fs.readFileSync(minCSS, 'utf-8').should.equal(".foo{float:left}.bar{float:left}");
+    fs.readFileSync(minJS, 'utf-8').should.equal('!function(){console.log("Hello World!")}(),function(){console.log("Hello World!")}();');
+    fs.readFileSync(minCSS, 'utf-8').should.equal(".bar,.foo{float:left}");
   });
 
   it("minify should work well with justCombo", function () {
@@ -168,7 +168,7 @@ describe("Asset loader", function () {
     minified.should.eql([
       { min: '/assets/min.js',
         assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
-        hash: '/assets/min.b37ac035.js' },
+        hash: '/assets/min.b7573b7a.js' },
       { min: '/assets/min.css',
         assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
         hash: '/assets/min.b7a2275c.css' }
@@ -178,7 +178,7 @@ describe("Asset loader", function () {
     var minJS = path.join(__dirname, map["/assets/min.js"]);
     var minCSS = path.join(__dirname, map["/assets/min.css"]);
 
-    fs.readFileSync(minJS, 'utf-8').should.equal("(function (a, b, c, d) {}());\n(function (a, b, c, d) {}());\n");
+    fs.readFileSync(minJS, 'utf-8').should.equal("(function (a, b, c, d) {\n  console.log('Hello World!');\n}());\n\n(function (a, b, c, d) {\n  console.log('Hello World!');\n}());\n\n");
     var css = fs.readFileSync(minCSS, 'utf-8');
     css.should.include('.bar {');
     css.should.include('.foo {');

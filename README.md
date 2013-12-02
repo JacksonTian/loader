@@ -20,15 +20,16 @@ npm install loader
   .js("/assets/scripts/lib/jquery.mousewheel.min.js")
   .js("/assets/scripts/lib/jquery.tagsphere.min.js")
   .css("/assets/styles/jquery.autocomplate.css")
-  .done(env, version) %>
+  .done(assetsMap, prefix, combo) %>
 ```
+
 ### 环境判别
-环境判别由如下代码实现：
+环境判别由`done`方法的第三个参数决定，如果传入combo值，将决定选用线下版本还是线上版本。如果不传入第三个参数，将由环境变量。如下代码实现：
 
 ```
 process.env.NODE_ENV === 'production'
 ```
-设置环境：
+如果不传入combo，需要设置环境，通过以下代码实现：
 
 ```
 # 生产环境
@@ -43,11 +44,18 @@ npm start
 ```
 
 ### 线上输出
-线上模式将会输出合并和压缩后的地址，该地址从Loader构造参数中得到。  
+线上模式将会输出合并和压缩后的地址，该地址从Loader构造参数中得到。
 
 ```html
 <script src="/assets/scripts/jqueryplugin.min.js?version=version"></script>
 <link rel="stylesheet" href="/assets/styles/jqueryplugin.min.css?version=version" media="all" />
+```
+
+如果你有CDN地址，可以传入prefix参数，使得可以一键切换到CDN地址上，实现网络加速。以下为结果示例：
+
+```html
+<script src="http://cnodejs.qiniudn.com/assets/scripts/jqueryplugin.min.js?version=version"></script>
+<link rel="stylesheet" href="http://cnodejs.qiniudn.com/assets/styles/jqueryplugin.min.css?version=version" media="all" />
 ```
 
 ### 线下输出
