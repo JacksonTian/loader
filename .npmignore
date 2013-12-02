@@ -1,3 +1,5 @@
 test/
 coverage.html
 lib-cov/
+*.min.*.js
+*.min.*.css
