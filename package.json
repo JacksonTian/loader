@@ -13,13 +13,28 @@
     "type": "git",
     "url": "git://github.com/TBEDP/loader.git"
   },
+  "config": {
+    "blanket": {
+      "pattern": "loader/lib",
+      "data-cover-flags": {
+        "debug": false
+      }
+    },
+    "travis-cov": {
+      "threshold": 98
+    }
+  },
   "dependencies": {
     "uglify-js": "=2.4.6",
     "clean-css": "=2.0.2"
   },
   "devDependencies": {
-    "mocha": ">=0.14.1",
-    "should": ">=0.6.0"
+    "mocha": "*",
+    "should": "*",
+    "blanket": "*",
+    "travis-cov": "*",
+    "coveralls": "*",
+    "mocha-lcov-reporter": "*"
   },
   "author": "Jackson Tian",
   "license": "MIT"
