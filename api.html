@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>loader Documentation</title>
+    <meta name="keywords" content="Loader" />
+    <meta name="description" content="Assets loader." />
+    <script src="assets/prettify.js"></script>
+    <script src="assets/jquery-1.8.2.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/base.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">loader</a>
+        </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+          
+            <li>
+              <a href="./api.html">API Docs</a>
+            </li>
+          
+          
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
+    <header class="jumbotron subhead">
+      <div class="container">
+        <h1>loader <small>Version: 0.0.7 By @Jackson Tian</small></h1>
+        <p class="lead">
+          Assets loader.
+        </p>
+      </div>
+    </header>
+
+<div class="container content">
+  <div class="row">
+    <div class="col-md-3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav affix">
+
+  <li>
+    <a href="#api_loader"><i class="icon-chevron-right"></i>loader</a>
+  </li>
+
+</ul>
+
+    </div>
+    <div class="col-md-9">
+      
+        <section id="api_loader" class="api">
+  <h2>loader: API索引</h2>
+  <ul class="indexs">
+  
+    <li>
+      <a href="#_Loader">Loader</a>
+    </li>
+
+    <li>
+      <a href="#_js">js</a>
+    </li>
+
+    <li>
+      <a href="#_css">css</a>
+    </li>
+
+    <li>
+      <a href="#_dev">dev</a>
+    </li>
+
+    <li>
+      <a href="#_pro">pro</a>
+    </li>
+
+    <li>
+      <a href="#_done">done</a>
+    </li>
+
+    <li>
+      <a href="#Loader_scan">scan</a>
+    </li>
+
+    <li>
+      <a href="#Loader_scanDir">scanDir</a>
+    </li>
+
+    <li>
+      <a href="#Loader_transformScript">transformScript</a>
+    </li>
+
+    <li>
+      <a href="#Loader_transformStyle">transformStyle</a>
+    </li>
+
+    <li>
+      <a href="#Loader_minify">minify</a>
+    </li>
+
+    <li>
+      <a href="#Loader_map">map</a>
+    </li>
+
+  </ul>
+  <hr />
+
+  
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+
+  
+  </table>
+  
+  
+  <h3 id="_Loader">
+    Loader
+  </h3>
+  
+
+  <p>静态资源加载器</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>函数</td>
+      <td>Loader()</td> 
+      <td></td>
+      <td>Loader</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>压缩js路径(js)</td>
+      <td colspan="2"></td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>压缩css路径(css)</td>
+      <td colspan="2"></td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="_js">
+    js
+  </h3>
+  
+
+  <p>加载js文件</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.prototype.js()</td> 
+      <td></td>
+      <td>js</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>src(String)</td>
+      <td colspan="2">js文件相对项目根目录的路径</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="_css">
+    css
+  </h3>
+  
+
+  <p>加载css文件</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.prototype.css()</td> 
+      <td></td>
+      <td>css</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>href(String)</td>
+      <td colspan="2">css文件相对项目根目录的路径</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="_dev">
+    dev
+  </h3>
+  
+
+  <p>生成开发环境下的标签</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.prototype.dev()</td> 
+      <td></td>
+      <td>dev</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="_pro">
+    pro
+  </h3>
+  
+
+  <p>生成线上环境下的标签</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.prototype.pro()</td> 
+      <td></td>
+      <td>pro</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>CDNMap(Object)</td>
+      <td colspan="2">通过Loader.scanDir() =&gt; Loader.minify() =&gt; Loader.map()得到的map文件</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>prefix(String)</td>
+      <td colspan="2">CDN前缀。如有CDN，可以一键切换文件到CDN中</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="_done">
+    done
+  </h3>
+  
+
+  <p>根据环境和版本号去生成对应标签<br />如果env没有传入，将取<code>process.env.NODE_ENV</code>作为判断，<code>production</code>为产品环境，其余将采用原始版本</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.prototype.done()</td> 
+      <td></td>
+      <td>done</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>CDNMap(Object)</td>
+      <td colspan="2">通过Loader.scanDir() =&gt; Loader.minify() =&gt; Loader.map()得到的map文件</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>prefix(String)</td>
+      <td colspan="2">CDN前缀。如有CDN，可以一键切换文件到CDN中</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>env(Boolean)</td>
+      <td colspan="2">是否启用压缩版</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="Loader_scan">
+    scan
+  </h3>
+  
+
+  <p>扫描文本中的静态资源部分，提取出目标路径和文件列表。<br />结果如下：</p>
+
+<div class="highlight"><pre lang="">[
+  {target: "x.js", assets:["path1", "path2"]},
+  {target: "x.css", assets:["path1", "path2"]}
+]
+</pre></div>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.scan()</td> 
+      <td>Loader</td>
+      <td>scan</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>view(String)</td>
+      <td colspan="2">view html code</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="Loader_scanDir">
+    scanDir
+  </h3>
+  
+
+  <p>扫描指定目录，生成合并压缩映射关系数组<br />生成结构如下：</p>
+
+<div class="highlight"><pre lang="">[
+  {target: "x.js", assets:["path1", "path2"]},
+  {target: "x.css", assets:["path1", "path2"]}
+]
+</pre></div>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.scanDir()</td> 
+      <td>Loader</td>
+      <td>scanDir</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>dirpath(String)</td>
+      <td colspan="2">The dir path</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="Loader_transformScript">
+    transformScript
+  </h3>
+  
+
+  <p>调用uglifyjs模块压缩脚本文件</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.transformScript()</td> 
+      <td>Loader</td>
+      <td>transformScript</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>input(String)</td>
+      <td colspan="2">JavaScript source code</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="Loader_transformStyle">
+    transformStyle
+  </h3>
+  
+
+  <p>调用clean css模块压缩样式表文件</p>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.transformStyle()</td> 
+      <td>Loader</td>
+      <td>transformStyle</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>input(String)</td>
+      <td colspan="2">CSS source code</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="Loader_minify">
+    minify
+  </h3>
+  
+
+  <p>根据传入映射关系数组和指定的基本目录地址，调用uglifyjs和cleancss压缩文本<br />并生成带MD5签名的压缩文件，以及一个debug文件</p>
+
+<div class="highlight"><pre lang="">[
+  {target: "x.js", assets:["path1", "path2"]},
+  {target: "x.css", assets:["path1", "path2"]}
+]
+=>
+[
+  {target: "x.js", min: "x.hash.js", debug: "x.hash.debug.js",
+     assets:["path1", "path2"]},
+  {target: "x.css", min: "x.hash.css", debug: "x.hash.debug.css",
+     assets:["path1", "path2"]}
+]
+</pre></div>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.minify()</td> 
+      <td>Loader</td>
+      <td>minify</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>basedir(String)</td>
+      <td colspan="2">基本目录路径</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>arr(Array)</td>
+      <td colspan="2">静态资源数组</td>
+    </tr>
+  
+
+  
+  </table>
+  
+  
+  <h3 id="Loader_map">
+    map
+  </h3>
+  
+
+  <p>将压缩生成的文件映射关系转换为map</p>
+
+<div class="highlight"><pre lang="">[
+  {target: "x.js", min: "x.hash.js", debug: "x.hash.debug.js",
+     assets:["path1", "path2"]},
+  {target: "x.css", min: "x.hash.css", debug: "x.hash.debug.css",
+     assets:["path1", "path2"]}
+]
+=>
+{
+  "x.js": "x.hash.js",
+  "x.css": "x.hash.css"
+}
+</pre></div>
+
+  <table class="table table-striped table-bordered table-hover table-condensed">
+  
+    <tr>
+      <td>方法</td>
+      <td>Loader.map()</td> 
+      <td>Loader</td>
+      <td>map</td>
+    </tr>
+  
+
+    <tr>
+      <td>参数</td>
+      <td>arr(Array)</td>
+      <td colspan="2">压缩生成的映射关系数组</td>
+    </tr>
+  
+
+  
+  </table>
+  
+</section>
+
+      
+    </div>
+  </div>
+</div>
+      <footer class="footer">
+        <div class="container">
+          <p class="pull-right">
+            <a href="#">Back to top</a>
+          </p>
+          <p>此文档通过doxmate生成。主题借鉴Bootstrap API文档风格，注解基于<a href="https://github.com/visionmedia/dox">Dox</a>。欢迎关注doxmate作者<a href="http://weibo.com/shyvo" target="_blank">@朴灵</a></p>
+          <ul class="footer-links">
+            <li><a href="https://github.com/visionmedia/dox">Dox主页</a></li>
+            <li><a href="http://html5ify.com/doxmate">Doxmate主页</a></li>
+            <li><a href="https://github.com/JacksonTian/doxmate">Doxmate源码</a></li>
+            <li><a href="https://github.com/JacksonTian/doxmate/issues?state=open">提交bug</a></li>
+          </ul>
+      </div>
+    </footer>
+    <script>
+      $(function() {
+        $('pre').addClass('prettyprint');
+        $('td pre').removeClass('prettyprint');
+        prettyPrint();
+        var $window = $(window);
+        $('.bs-docs-sidenav').affix({
+          offset: {
+            top: function () {
+              return $window.width() <= 980 ? 290 : 210
+            },
+            bottom: 270
+          }
+        });
+        $(".content").find('h1, h2, h3, h4, h5, h6').each(function () {
+          var node = $(this);
+          // 总是设置id
+          node.attr("id", "index_" + node.text());
+          node.css("paddingTop", 50);
+        });
+      });
+    </script>
+  
+  </body>
+</html>
+
