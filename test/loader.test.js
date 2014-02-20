@@ -7,12 +7,12 @@ var fs = require('fs');
 describe("Asset loader", function () {
   it("Constructor", function () {
     var loader = new Loader("/assets/scripts/jqueryplugin.min.js");
-    loader.script.should.have.property("min", "/assets/scripts/jqueryplugin.min.js");
+    loader.script.should.have.property("target", "/assets/scripts/jqueryplugin.min.js");
     loader = new Loader("/assets/scripts/jqueryplugin.min.css");
-    loader.style.should.have.property("min", "/assets/scripts/jqueryplugin.min.css");
+    loader.style.should.have.property("target", "/assets/scripts/jqueryplugin.min.css");
     loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
-    loader.script.should.have.property("min", "/assets/scripts/jqueryplugin.min.js");
-    loader.style.should.have.property("min", "/assets/scripts/jqueryplugin.min.css");
+    loader.script.should.have.property("target", "/assets/scripts/jqueryplugin.min.js");
+    loader.style.should.have.property("target", "/assets/scripts/jqueryplugin.min.css");
   });
 
   it("js/css", function () {
@@ -70,7 +70,7 @@ describe("Asset loader", function () {
     process.env.NODE_ENV = 'production';
     var map = {
       '/assets/scripts/jqueryplugin.min.js': 'http://a.bcdn.com/jqueryplugin.min.hash.js',
-      '/assets/scripts/jqueryplugin.min.css': 'http://a.bcdn.com/jqueryplugin.min.hash.css',
+      '/assets/scripts/jqueryplugin.min.css': 'http://a.bcdn.com/jqueryplugin.min.hash.css'
     };
     var output = loader.done(map);
     output.should.equal('<script src="http://a.bcdn.com/jqueryplugin.min.hash.js"></script>\n' +
@@ -98,29 +98,30 @@ describe("Asset loader", function () {
 
     Loader.scan(str).should.eql([
       {
-        min: '/assets/scripts/index.min.js',
+        target: '/assets/scripts/index.min.js',
         assets: [ '/assets/scripts/index.js' ]
       },
       {
-        min: '/assets/scripts/jqueryplugin.min.js',
+        target: '/assets/scripts/jqueryplugin.min.js',
         assets: [ '/assets/scripts/lib/jquery.jmodal.js',
            '/assets/scripts/lib/jquery.mousewheel.min.js',
            '/assets/scripts/lib/jquery.tagsphere.min.js' ]
       },
-      { min: '/assets/styles/jqueryplugin.min.css',
+      { target: '/assets/styles/jqueryplugin.min.css',
         assets: [ '/hehe' ] }
     ]);
 
     Loader.scanDir(path.join(__dirname, "views")).should.eql([
-      { min: '/assets/styles/common.min.css',
-        assets:
-         [ '/assets/styles/reset.css',
-           '/assets/styles/common.css',
-           '/assets/styles/site_nav.css',
-           '/assets/styles/color.css',
-           '/assets//styles/jquery.autocomplete.css' ]
+      { target: '/assets/styles/common.min.css',
+        assets: [
+          '/assets/styles/reset.css',
+          '/assets/styles/common.css',
+          '/assets/styles/site_nav.css',
+          '/assets/styles/color.css',
+          '/assets//styles/jquery.autocomplete.css'
+        ]
       },
-      { min: '/assets/styles/hoho.min.css',
+      { target: '/assets/styles/hoho.min.css',
         assets:
          [ '/assets/styles/reset.css',
            '/assets/styles/common.css',
@@ -143,7 +144,7 @@ describe("Asset loader", function () {
 
     Loader.scan(str).should.eql([
       {
-        min: '/assets/styles/common.min.css',
+        target: '/assets/styles/common.min.css',
         assets:
          [ '/assets/styles/reset.css',
            '/assets/styles/common.css',
@@ -161,17 +162,21 @@ describe("Asset loader", function () {
 
   it("minify should work well", function () {
     var arr = [
-      {"min": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]},
-      {"min": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}
+      {"target": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]},
+      {"target": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}
     ];
     var minified = Loader.minify(__dirname, arr);
     minified.should.eql([
-      { min: '/assets/min.js',
+      { target: '/assets/min.js',
         assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
-        hash: '/assets/min.9b080a0d.js' },
-      { min: '/assets/min.css',
+        min: '/assets/min.9b080a0d.js',
+        debug: '/assets/min.9b080a0d.debug.js'
+      },
+      { target: '/assets/min.css',
         assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
-        hash: '/assets/min.bd86c426.css' }
+        min: '/assets/min.bd86c426.css',
+        debug: '/assets/min.bd86c426.debug.css'
+      }
     ]);
 
     var map = Loader.map(minified);
@@ -180,30 +185,5 @@ describe("Asset loader", function () {
 
     fs.readFileSync(minJS, 'utf-8').should.equal('!function(){console.log("Hello World!")}(),function(){console.log("Hello World!")}();');
     fs.readFileSync(minCSS, 'utf-8').should.equal(".bar,.foo{float:left}");
-  });
-
-  it("minify should work well with justCombo", function () {
-    var arr = [
-      {"min": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]},
-      {"min": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}
-    ];
-    var minified = Loader.minify(__dirname, arr, true);
-    minified.should.eql([
-      { min: '/assets/min.js',
-        assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
-        hash: '/assets/min.b7573b7a.js' },
-      { min: '/assets/min.css',
-        assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
-        hash: '/assets/min.b7a2275c.css' }
-    ]);
-
-    var map = Loader.map(minified);
-    var minJS = path.join(__dirname, map["/assets/min.js"]);
-    var minCSS = path.join(__dirname, map["/assets/min.css"]);
-
-    fs.readFileSync(minJS, 'utf-8').should.equal("(function (a, b, c, d) {\n  console.log('Hello World!');\n}());\n\n(function (a, b, c, d) {\n  console.log('Hello World!');\n}());\n\n");
-    var css = fs.readFileSync(minCSS, 'utf-8');
-    css.should.include('.bar {');
-    css.should.include('.foo {');
   });
 });

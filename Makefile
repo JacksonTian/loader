@@ -1,20 +1,24 @@
-TESTS = test/*.test.js
+TESTS = test/*.js
 REPORTER = spec
-TIMEOUT = 1000
+TIMEOUT = 10000
 
 test:
 	@NODE_ENV=test ./node_modules/mocha/bin/mocha \
 		--reporter $(REPORTER) \
 		--timeout $(TIMEOUT) \
+		$(MOCHA_OPTS) \
 		$(TESTS)
 
 test-cov:
-	@rm -rf ./lib-cov
-	@$(MAKE) lib-cov
-	@LOADER_COV=1 $(MAKE) test
-	@LOADER_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
+	@$(MAKE) test REPORTER=dot
+	@$(MAKE) test MOCHA_OPTS='--require blanket' REPORTER=html-cov > coverage.html
+	@$(MAKE) test MOCHA_OPTS='--require blanket' REPORTER=travis-cov
 
-lib-cov:
-	@jscoverage --encoding=utf8 lib $@
+test-coveralls:
+	@$(MAKE) test
+	@echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
+	@$(MAKE) test MOCHA_OPTS='--require blanket' REPORTER=mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 
-.PHONY: test-cov test lib-cov
+test-all: test test-cov
+
+.PHONY: test test-cov test-all
