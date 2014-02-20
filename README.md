@@ -77,7 +77,7 @@ $ npm start
 ![流程](./figures/flow.png)
 
 ## API
-请参见[API文档](http://html5ify.com/loader/doc/api.html)。
+请参见[API文档](http://html5ify.com/loader/api.html)。
 
 # License
 [MIT license](https://github.com/JacksonTian/loader/blob/master/MIT-License)

@@ -1,6 +1,6 @@
 {
   "name": "loader",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Assets loader.",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/TBEDP/loader.git"
+    "url": "git://github.com/JacksonTian/loader.git"
   },
   "config": {
     "blanket": {
