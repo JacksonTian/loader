@@ -9,6 +9,9 @@
   "keywords": [
     "Loader"
   ],
+  "bin": {
+    "loader": "bin/build"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/JacksonTian/loader.git"
