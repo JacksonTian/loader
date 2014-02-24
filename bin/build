@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+var path = require('path');
+var fs = require('fs');
+var Loader = require('../');
+
+var argv = process.argv;
+
+console.log(argv);
+
+if (argv.length < 4) {
+  console.log("Example: loader views_dir base_dir");
+  console.log("\tviews_dir: views folder");
+  console.log("\tbase_dir: project root folder");
+  console.log("");
+  console.log("e.g. loader ./views ./");
+  process.exit(1);
+}
+
+// app/views
+var viewsDir = path.join(process.cwd(), argv[2]);
+// app/
+var baseDir = path.join(process.cwd(), argv[3]);
+
+// scan views folder, get the assets map
+var scaned = Loader.scanDir(viewsDir);
+console.log("Scaned.");
+
+// combo？md5 hash
+var minified = Loader.minify(baseDir, scaned);
+console.log(minified);
+console.log("Compile static assets done.");
+
+// write the assets mapping into assets.json
+var assets = path.join(baseDir, 'assets.json');
+console.log("assets.json is here: " + assets);
+fs.writeFileSync(assets, JSON.stringify(Loader.map(minified)));
+console.log("write assets.json done. assets.json: ");
+console.log(fs.readFileSync(assets, 'utf-8'));
