@@ -5,8 +5,6 @@ var Loader = require('../');
 
 var argv = process.argv;
 
-console.log(argv);
-
 if (argv.length < 4) {
   console.log("Example: loader views_dir base_dir");
   console.log("\tviews_dir: views folder");
