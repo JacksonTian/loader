@@ -1,7 +1,7 @@
 var http = require('http');
 var connect = require('connect');
 var render = require('connect-render');
-var Loader = require('loader');
+var Loader = require('../');
 
 require('response-patch');
 
@@ -20,6 +20,8 @@ app.use(render({
   }
 }));
 
+app.use(Loader.less(__dirname));
+
 // 解析静态文件
 app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
 
@@ -27,4 +29,6 @@ app.use('/', function (req, res) {
   res.render('index');
 });
 
-http.createServer(app).listen(3001);
+http.createServer(app).listen(3001, function () {
+  console.log('http://localhost:3001/');
+});

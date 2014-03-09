@@ -79,5 +79,24 @@ $ npm start
 ## API
 请参见[API文档](http://html5ify.com/loader/api.html)。
 
+## LESS支持
+Loader中支持less文件与普通的CSS文件没有差别，通过`.css()`加载即可。
+
+```
+<%- Loader("/assets/styles/jqueryplugin.min.css")
+  .css("/assets/styles/jquery.autocomplate.css")
+  .css("/assets/styles/bootstrap.less")
+  .done(assetsMap, prefix, combo) %>
+```
+
+默认情况下会输出less的原始文件，需要借助`Loader.less(root)`中间来拦截`.less`文件的请求，它将自动将其转换为CSS内容。示例如下：
+
+```
+app.use(Loader.less(__dirname)); // Loader.less一定要在静态文件中间件之前，否则.less文件会被静态文件中间件所处理
+app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
+```
+
+在扫描静态文件、合并压缩方面，没有任何改动。
+
 # License
 [MIT license](https://github.com/JacksonTian/loader/blob/master/MIT-License)

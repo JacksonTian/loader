@@ -38,6 +38,21 @@ describe("Asset loader", function () {
     process.env.NODE_ENV = nodeEnv;
   });
 
+  it('less', function () {
+    var loader = Loader("/assets/style/jqueryplugin.min.css");
+    loader.css("/hehe.less");
+    loader.style.assets.should.eql(['/hehe.less']);
+    var output = loader.done();
+    output.should.match(/<link rel="stylesheet" href="\/hehe.less\?v=\d{13}" media="all" \/>/);
+    var nodeEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = 'production';
+    var map = {
+      '/assets/style/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+    };
+    loader.done(map).should.equal('<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+    process.env.NODE_ENV = nodeEnv;
+  });
+
   it("done", function () {
     var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
     loader.js("/hehe");
@@ -160,10 +175,20 @@ describe("Asset loader", function () {
     Loader.transformStyle(".foo {  float: left;}").should.equal(".foo{float:left}");
   });
 
+  it("less should work well", function () {
+    Loader.transformLess('.class{width: (1 + 1)}').should.equal('.class {\n  width: 2;\n}\n');
+  });
+
+  it("less should work with exception", function () {
+    (function () {
+      Loader.transformLess('.class{width: (1 +)}').should.equal('.class {\n  width: 2;\n}\n');
+    }).should.throw("expected ')' got '+'");
+  });
+
   it("minify should work well", function () {
     var arr = [
       {"target": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]},
-      {"target": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css"]}
+      {"target": "/assets/min.css", "assets": ["/assets/hehe.css", "/assets/ganma.css", "/assets/home.less"]}
     ];
     var minified = Loader.minify(__dirname, arr);
     minified.should.eql([
@@ -173,9 +198,9 @@ describe("Asset loader", function () {
         debug: '/assets/min.9b080a0d.debug.js'
       },
       { target: '/assets/min.css',
-        assets: [ '/assets/hehe.css', '/assets/ganma.css' ],
-        min: '/assets/min.bd86c426.css',
-        debug: '/assets/min.bd86c426.debug.css'
+        assets: [ '/assets/hehe.css', '/assets/ganma.css', '/assets/home.less' ],
+        min: '/assets/min.192312f7.css',
+        debug: '/assets/min.192312f7.debug.css'
       }
     ]);
 
@@ -184,6 +209,6 @@ describe("Asset loader", function () {
     var minCSS = path.join(__dirname, map["/assets/min.css"]);
 
     fs.readFileSync(minJS, 'utf-8').should.equal('!function(){console.log("Hello World!")}(),function(){console.log("Hello World!")}();');
-    fs.readFileSync(minCSS, 'utf-8').should.equal(".bar,.foo{float:left}");
+    fs.readFileSync(minCSS, 'utf-8').should.equal(".bar,.foo{float:left}.class{width:2}");
   });
 });
