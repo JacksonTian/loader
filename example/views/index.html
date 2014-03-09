@@ -6,6 +6,7 @@
     <%- Loader("/assets/index.min.css", "/assets/index.min.js")
     .css("/assets/a.css")
     .css("/assets/b.css")
+    .css("/assets/c.less")
     .js("/assets/a.js")
     .js("/assets/b.js")
     .done(assetsMap, CDN) %>
@@ -15,6 +16,7 @@
     &lt;%- Loader("/assets/index.min.css", "/assets/index.min.js")
     .css("/assets/a.css")
     .css("/assets/b.css")
+    .css("/assets/c.less")
     .js("/assets/a.js")
     .js("/assets/b.js")
     .done(assetsMap, CDN) %&gt;
@@ -25,6 +27,7 @@
       &lt;script src="/assets/b.js?v=1370513502908"&gt;&lt;/script&gt;
       &lt;link rel="stylesheet" href="/assets/a.css?v=1370512506883" media="all"&gt;
       &lt;link rel="stylesheet" href="/assets/b.css?v=1370512506883" media="all"&gt;
+      &lt;link rel="stylesheet" href="/assets/c.less?v=1370512506883" media="all"&gt;
     </pre>
     Production =>
     <pre>

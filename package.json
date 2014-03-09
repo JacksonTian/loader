@@ -1,6 +1,6 @@
 {
   "name": "loader",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "Assets loader.",
   "main": "index.js",
   "scripts": {
@@ -29,11 +29,14 @@
   },
   "dependencies": {
     "uglify-js": "=2.4.6",
-    "clean-css": "=2.0.2"
+    "clean-css": "=2.0.2",
+    "less": "=1.7.0"
   },
   "devDependencies": {
     "mocha": "*",
     "should": "*",
+    "supertest": "*",
+    "connect": "*",
     "blanket": "*",
     "travis-cov": "*",
     "coveralls": "*",
