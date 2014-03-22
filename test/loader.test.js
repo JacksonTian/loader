@@ -194,13 +194,13 @@ describe("Asset loader", function () {
     minified.should.eql([
       { target: '/assets/min.js',
         assets: [ '/assets/hehe.js', '/assets/ganma.js' ],
-        min: '/assets/min.9b080a0d.js',
-        debug: '/assets/min.9b080a0d.debug.js'
+        min: '/assets/min.99d5311f.min.js',
+        debug: '/assets/min.99d5311f.debug.js'
       },
       { target: '/assets/min.css',
         assets: [ '/assets/hehe.css', '/assets/ganma.css', '/assets/home.less' ],
-        min: '/assets/min.192312f7.css',
-        debug: '/assets/min.192312f7.debug.css'
+        min: '/assets/min.0d525130.min.css',
+        debug: '/assets/min.0d525130.debug.css'
       }
     ]);
 
@@ -208,7 +208,7 @@ describe("Asset loader", function () {
     var minJS = path.join(__dirname, map["/assets/min.js"]);
     var minCSS = path.join(__dirname, map["/assets/min.css"]);
 
-    fs.readFileSync(minJS, 'utf-8').should.equal('!function(){console.log("Hello World!")}(),function(){console.log("Hello World!")}();');
-    fs.readFileSync(minCSS, 'utf-8').should.equal(".bar,.foo{float:left}.class{width:2}");
+    fs.readFileSync(minJS, 'utf-8').should.equal('!function(){console.log("Hello World!")}();\n!function(){console.log("Hello World!")}();\n');
+    fs.readFileSync(minCSS, 'utf-8').should.equal(".foo{float:left}\n.bar{float:left}\n.class{width:2}\n");
   });
 });
