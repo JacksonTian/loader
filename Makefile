@@ -19,6 +19,6 @@ test-coveralls:
 	@echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
 	@$(MAKE) test MOCHA_OPTS='--require blanket' REPORTER=mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 
-test-all: test test-cov
+test-all: test test-cov test-coveralls
 
 .PHONY: test test-cov test-all
