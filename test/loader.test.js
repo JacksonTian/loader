@@ -181,10 +181,9 @@ describe("Asset loader", function () {
 
   it("less should work with exception", function () {
     (function () {
-      Loader.transformLess('.class{width: (1 +)}').should.equal('.class {\n  width: 2;\n}\n');
+      Loader.transformLess('.class{width: (1 +)}');
     }).should.throw("expected ')' got '+'");
   });
-
 
   it("stylus should work well", function () {
     Loader.transformStylus('.class{width: (1 + 1)}').should.equal('.class {\n  width: 2;\n}\n');
@@ -192,8 +191,18 @@ describe("Asset loader", function () {
 
   it("stylus should work with exception", function () {
     (function () {
-      Loader.transformStylus('.class{width: (1 +)}').should.equal('.class {\n  width: 2;\n}\n');
+      Loader.transformStylus('.class{width: (1 +)}');
     }).should.throw("stylus:1\n > 1| .class{width: (1 +)}\n\nCannot read property 'lineno' of undefined\n    at \".class\" (stylus:294)\n");
+  });
+
+  it("coffee should work well", function () {
+    Loader.transformCoffee('foo = 1').should.equal('(function() {\n  var foo;\n\n  foo = 1;\n\n}).call(this);\n');
+  });
+
+  it("coffee should work with exception", function () {
+    (function () {
+      Loader.transformCoffee('<foo> = bar');
+    }).should.throw("unexpected <");
   });
 
   it("minify should work well", function () {
