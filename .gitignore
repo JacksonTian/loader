@@ -19,3 +19,5 @@ test/assets/min.*
 assets.json
 *.min.*.js
 *.min.*.css
+*.debug.*
+*.min.*

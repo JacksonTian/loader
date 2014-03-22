@@ -185,6 +185,17 @@ describe("Asset loader", function () {
     }).should.throw("expected ')' got '+'");
   });
 
+
+  it("stylus should work well", function () {
+    Loader.transformStylus('.class{width: (1 + 1)}').should.equal('.class {\n  width: 2;\n}\n');
+  });
+
+  it("stylus should work with exception", function () {
+    (function () {
+      Loader.transformStylus('.class{width: (1 +)}').should.equal('.class {\n  width: 2;\n}\n');
+    }).should.throw("stylus:1\n > 1| .class{width: (1 +)}\n\nCannot read property 'lineno' of undefined\n    at \".class\" (stylus:294)\n");
+  });
+
   it("minify should work well", function () {
     var arr = [
       {"target": "/assets/min.js", "assets": ["/assets/hehe.js", "/assets/ganma.js"]},
@@ -210,5 +221,14 @@ describe("Asset loader", function () {
 
     fs.readFileSync(minJS, 'utf-8').should.equal('!function(){console.log("Hello World!")}();\n!function(){console.log("Hello World!")}();\n');
     fs.readFileSync(minCSS, 'utf-8').should.equal(".foo{float:left}\n.bar{float:left}\n.class{width:2}\n");
+  });
+
+  it("minify should work with exception", function () {
+    var arr = [
+      {"target": "/assets/sorry.js", "assets": ["/assets/invalid.js"]},
+    ];
+    (function () {
+      Loader.minify(__dirname, arr);
+    }).should.throw('Compress /assets/invalid.js has error:\nUnexpected token: operator (<)');
   });
 });
