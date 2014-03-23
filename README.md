@@ -80,7 +80,7 @@ $ npm start
 请参见[API文档](http://html5ify.com/loader/api.html)。
 
 ## LESS支持
-Loader中支持less文件与普通的CSS文件没有差别，通过`.css()`加载即可。
+Loader中支持`.less`文件与普通的`.css`文件没有差别，通过`.css()`加载即可。
 
 ```
 <%- Loader("/assets/styles/jqueryplugin.min.css")
@@ -89,7 +89,7 @@ Loader中支持less文件与普通的CSS文件没有差别，通过`.css()`加�
   .done(assetsMap, prefix, combo) %>
 ```
 
-默认情况下会输出less的原始文件，需要借助`Loader.less(root)`中间来拦截`.less`文件的请求，它将自动将其转换为CSS内容。示例如下：
+默认情况下会输出`.less`的原始内容，需要借助`Loader.less(root)`中间来拦截`.less`文件的请求，它将自动将其转换为CSS内容。示例如下：
 
 ```
 app.use(Loader.less(__dirname)); // Loader.less一定要在静态文件中间件之前，否则.less文件会被静态文件中间件所处理
@@ -99,7 +99,7 @@ app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 
 在扫描静态文件、合并压缩方面，没有任何改动。
 
 ## Stylus支持
-基本同LESS。Loader中支持styl文件与普通的CSS文件没有差别，通过`.css()`加载即可。
+基本同LESS。Loader中支持`.styl`文件与普通的`.css`文件没有差别，通过`.css()`加载即可。
 
 ```
 <%- Loader("/assets/styles/jqueryplugin.min.css")
@@ -108,10 +108,28 @@ app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 
   .done(assetsMap, prefix, combo) %>
 ```
 
-默认情况下会输出styl的原始文件，需要借助`Loader.stylus(root)`中间来拦截`.styl`文件的请求，它将自动将其转换为CSS内容。示例如下：
+默认情况下会输出styl的原始内容，需要借助`Loader.stylus(root)`中间来拦截`.styl`文件的请求，它将自动将其转换为CSS内容。示例如下：
 
 ```
 app.use(Loader.stylus(__dirname)); // Loader.stylus一定要在静态文件中间件之前，否则.styl文件会被静态文件中间件所处理
+app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
+```
+
+在扫描静态文件、合并压缩方面，没有任何改动。
+
+## CoffeeScript支持
+基本同LESS。Loader中支持`.coffee`文件与普通的`.js`文件没有差别，通过`.js()`加载即可。
+
+```
+<%- Loader("/assets/home.js")
+  .js("/assets/home.coffee")
+  .done(assetsMap, prefix, combo) %>
+```
+
+默认情况下会输出`.coffee`的原始内容，需要借助`Loader.coffee(root)`中间来拦截`.coffee`文件的请求，它将自动将其转换为JS内容。示例如下：
+
+```
+app.use(Loader.coffee(__dirname)); // Loader.coffee一定要在静态文件中间件之前，否则.coffee文件会被静态文件中间件所处理
 app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
 ```
 

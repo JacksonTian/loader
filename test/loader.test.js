@@ -232,6 +232,63 @@ describe("Asset loader", function () {
     fs.readFileSync(minCSS, 'utf-8').should.equal(".foo{float:left}\n.bar{float:left}\n.class{width:2}\n");
   });
 
+  it("minify should work well with coffee", function () {
+    var arr = [
+      {"target": "/assets/coffee.js", "assets": ["/assets/js.coffee"]}
+    ];
+    var minified = Loader.minify(__dirname, arr);
+    minified.should.eql([
+      { target: '/assets/coffee.js',
+        assets: [ '/assets/js.coffee'],
+        min: '/assets/coffee.3c41bb78.min.js',
+        debug: '/assets/coffee.3c41bb78.debug.js'
+      }
+    ]);
+
+    var map = Loader.map(minified);
+    var minJS = path.join(__dirname, map["/assets/coffee.js"]);
+
+    fs.readFileSync(minJS, 'utf-8').should.equal('(function(){:var square;:square=function(x){return x * x}).call(this);\n');
+  });
+
+  it("minify should work well with coffee", function () {
+    var arr = [
+      {"target": "/assets/coffee.js", "assets": ["/assets/js.coffee"]}
+    ];
+    var minified = Loader.minify(__dirname, arr);
+    minified.should.eql([
+      { target: '/assets/coffee.js',
+        assets: [ '/assets/js.coffee'],
+        min: '/assets/coffee.3c41bb78.min.js',
+        debug: '/assets/coffee.3c41bb78.debug.js'
+      }
+    ]);
+
+    var map = Loader.map(minified);
+    var minJS = path.join(__dirname, map["/assets/coffee.js"]);
+
+    fs.readFileSync(minJS, 'utf-8').should.equal('(function(){:var square;:square=function(x){return x * x}).call(this);\n');
+  });
+
+  it("minify should work well with stylus", function () {
+    var arr = [
+      {"target": "/assets/home.css", "assets": ["/assets/home.styl"]}
+    ];
+    var minified = Loader.minify(__dirname, arr);
+    minified.should.eql([
+      { target: '/assets/home.css',
+        assets: [ '/assets/home.styl'],
+        min: '/assets/home.cb2d2217.min.css',
+        debug: '/assets/home.cb2d2217.debug.css'
+      }
+    ]);
+
+    var map = Loader.map(minified);
+    var minJS = path.join(__dirname, map["/assets/home.css"]);
+
+    fs.readFileSync(minJS, 'utf-8').should.equal('.class{width:2}\n');
+  });
+
   it("minify should work with exception", function () {
     var arr = [
       {"target": "/assets/sorry.js", "assets": ["/assets/invalid.js"]},
