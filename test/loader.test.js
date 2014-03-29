@@ -170,6 +170,29 @@ describe("Asset loader", function () {
     ]);
   });
 
+  it('scanView with mutiple files in one line', function () {
+    var str = '{%- Loader("/assets/styles/common.min.css", "/assets/js/js.min.js")' +
+      '.css("/assets/styles/reset.css")' +
+      '.css("/assets/styles/common.css")' +
+      '.css("/assets/styles/site_nav.css")' +
+      '.css("/assets/styles/color.css")' +
+      '.css("/assets//styles/jquery.autocomplete.css")' +
+      '.done()' +
+      '%}';
+
+    Loader.scan(str).should.eql([
+      {
+        target: '/assets/styles/common.min.css',
+        assets:
+         [ '/assets/styles/reset.css',
+           '/assets/styles/common.css',
+           '/assets/styles/site_nav.css',
+           '/assets/styles/color.css',
+           '/assets//styles/jquery.autocomplete.css' ]
+      }
+    ]);
+  });
+
   it("uglify/CSS should work well", function () {
     Loader.transformScript("(function (a, b, c, d) {console.log('hello world!');}());").should.equal('!function(){console.log("hello world!")}();');
     Loader.transformStyle(".foo {  float: left;}").should.equal(".foo{float:left}");
