@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*",
+    "should": "3.0.x",
     "supertest": "*",
-    "connect": "*",
+    "connect": "2.22.0",
     "blanket": "*",
     "travis-cov": "*",
     "coveralls": "*",

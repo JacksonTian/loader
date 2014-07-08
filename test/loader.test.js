@@ -286,15 +286,15 @@ describe("Asset loader", function () {
     minified.should.eql([
       { target: '/assets/coffee.js',
         assets: [ '/assets/js.coffee'],
-        min: '/assets/coffee.3c41bb78.min.js',
-        debug: '/assets/coffee.3c41bb78.debug.js'
+        min: '/assets/coffee.b8b735e8.min.js',
+        debug: '/assets/coffee.b8b735e8.debug.js'
       }
     ]);
 
     var map = Loader.map(minified);
     var minJS = path.join(__dirname, map["/assets/coffee.js"]);
 
-    fs.readFileSync(minJS, 'utf-8').should.equal('(function(){:var square;:square=function(x){return x * x}).call(this);\n');
+    fs.readFileSync(minJS, 'utf-8').should.equal('(function(){var n;n=function(n){return n*n}}).call(this);\n');
   });
 
   it("minify should work well with coffee", function () {
@@ -305,15 +305,15 @@ describe("Asset loader", function () {
     minified.should.eql([
       { target: '/assets/coffee.js',
         assets: [ '/assets/js.coffee'],
-        min: '/assets/coffee.3c41bb78.min.js',
-        debug: '/assets/coffee.3c41bb78.debug.js'
+        min: '/assets/coffee.b8b735e8.min.js',
+        debug: '/assets/coffee.b8b735e8.debug.js'
       }
     ]);
 
     var map = Loader.map(minified);
     var minJS = path.join(__dirname, map["/assets/coffee.js"]);
 
-    fs.readFileSync(minJS, 'utf-8').should.equal('(function(){:var square;:square=function(x){return x * x}).call(this);\n');
+    fs.readFileSync(minJS, 'utf-8').should.equal('(function(){var n;n=function(n){return n*n}}).call(this);\n');
   });
 
   it("minify should work well with stylus", function () {
