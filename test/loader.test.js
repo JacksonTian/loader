@@ -97,10 +97,8 @@ describe("Asset loader", function () {
         '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
     });
 
-    it('should work with global defaults', function () {
-      Loader.setGlobal({
-        prefix: 'http://gogogo.qiniu.com',
-      });
+    it('should work with global prefix', function () {
+      Loader.prefix = 'http://gogogo.qiniu.com';
       var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
 
       loader.js("/hehe");
@@ -117,6 +115,34 @@ describe("Asset loader", function () {
       };
       loader.done(map, '', true).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
         '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+      delete Loader.prefix;
+    });
+
+    it('should work with global mini', function () {
+      Loader.mini = true;
+      var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+
+      var map = {
+        '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+        '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+      };
+      // test this.isMinify
+      loader.done(map).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+        '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+      delete Loader.mini;
+    });
+
+    it('should work with instance mini', function () {
+      var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+      loader.mini = true;
+      var map = {
+        '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+        '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+      };
+      // test this.isMinify
+      loader.done(map).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+        '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+      // delete Loader.mini;
     });
   });
 
