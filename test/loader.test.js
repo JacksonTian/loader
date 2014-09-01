@@ -97,7 +97,7 @@ describe("Asset loader", function () {
         '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
     });
 
-    it('should work with global defaults', function () {
+    it('should work with global defaults prefix', function () {
       Loader.setGlobal({
         prefix: 'http://gogogo.qiniu.com',
       });
@@ -116,6 +116,21 @@ describe("Asset loader", function () {
         '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
       };
       loader.done(map, '', true).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+        '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+    });
+
+    it('should work with global defaults isMinify', function () {
+      Loader.setGlobal({
+        isMinify: true,
+      });
+      var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+
+      var map = {
+        '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+        '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+      };
+      // test this.isMinify
+      loader.done(map).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
         '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
     });
   });
