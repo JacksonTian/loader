@@ -21,4 +21,4 @@ test-coveralls:
 
 test-all: test test-cov test-coveralls
 
-.PHONY: test test-cov test-all
+.PHONY: test test-cov test-all test-coveralls

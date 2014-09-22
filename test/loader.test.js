@@ -76,24 +76,74 @@ describe("Asset loader", function () {
     process.env.NODE_ENV = nodeEnv;
   });
 
-  it("done", function () {
-    var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
-    loader.js("/hehe");
-    loader.script.assets.should.eql(['/hehe']);
-    loader.js("/heihei");
-    loader.script.assets.should.eql(['/hehe', '/heihei']);
-    loader.css("/hehe.css");
-    loader.style.assets.should.eql(['/hehe.css']);
-    var output = loader.done(undefined, '', false);
-    output.should.match(/<script src="\/hehe\?v=\d{13}"><\/script>/);
-    output.should.match(/<script src="\/heihei\?v=\d{13}"><\/script>/);
-    output.should.match(/<link rel="stylesheet" href="\/hehe.css\?v=\d{13}" media="all" \/>/);
-    var map = {
-      '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
-      '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
-    };
-    loader.done(map, '', true).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
-      '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+  describe('#done', function () {
+    it("should work with normal use", function () {
+      var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+      loader.js("/hehe");
+      loader.script.assets.should.eql(['/hehe']);
+      loader.js("/heihei");
+      loader.script.assets.should.eql(['/hehe', '/heihei']);
+      loader.css("/hehe.css");
+      loader.style.assets.should.eql(['/hehe.css']);
+      var output = loader.done(undefined, '', false);
+      output.should.match(/<script src="\/hehe\?v=\d{13}"><\/script>/);
+      output.should.match(/<script src="\/heihei\?v=\d{13}"><\/script>/);
+      output.should.match(/<link rel="stylesheet" href="\/hehe.css\?v=\d{13}" media="all" \/>/);
+      var map = {
+        '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+        '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+      };
+      loader.done(map, '', true).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+        '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+    });
+
+    it('should work with global prefix', function () {
+      Loader.prefix = 'http://gogogo.qiniu.com';
+      var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+
+      loader.js("/hehe");
+      loader.js("/heihei");
+      loader.css("/hehe.css");
+
+      var output = loader.done();
+      output.should.match(/<script src="http:\/\/gogogo\.qiniu\.com\/hehe\?v=\d{13}"><\/script>/);
+      output.should.match(/<script src="http:\/\/gogogo\.qiniu\.com\/heihei\?v=\d{13}"><\/script>/);
+      output.should.match(/<link rel="stylesheet" href="http:\/\/gogogo\.qiniu\.com\/hehe.css\?v=\d{13}" media="all" \/>/);
+      var map = {
+        '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+        '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+      };
+      loader.done(map, '', true).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+        '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+      delete Loader.prefix;
+    });
+
+    it('should work with global mini', function () {
+      Loader.mini = true;
+      var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+
+      var map = {
+        '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+        '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+      };
+      // test this.isMinify
+      loader.done(map).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+        '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+      delete Loader.mini;
+    });
+
+    it('should work with instance mini', function () {
+      var loader = Loader("/assets/scripts/jqueryplugin.min.js", "/assets/scripts/jqueryplugin.min.css");
+      loader.mini = true;
+      var map = {
+        '/assets/scripts/jqueryplugin.min.js': '/assets/scripts/jqueryplugin.min.js?v=version',
+        '/assets/scripts/jqueryplugin.min.css': '/assets/scripts/jqueryplugin.min.css?v=version'
+      };
+      // test this.isMinify
+      loader.done(map).should.equal('<script src="/assets/scripts/jqueryplugin.min.js?v=version"></script>\n' +
+        '<link rel="stylesheet" href="/assets/scripts/jqueryplugin.min.css?v=version" media="all" />\n');
+      // delete Loader.mini;
+    });
   });
 
   it("CDNMap", function () {
