@@ -17,12 +17,6 @@
     "url": "git://github.com/JacksonTian/loader.git"
   },
   "config": {
-    "blanket": {
-      "pattern": "loader/lib",
-      "data-cover-flags": {
-        "debug": false
-      }
-    },
     "travis-cov": {
       "threshold": 98
     }
@@ -39,7 +33,7 @@
     "should": "3.0.x",
     "supertest": "*",
     "connect": "2.22.0",
-    "blanket": "*",
+    "istanbul": "*",
     "travis-cov": "*",
     "coveralls": "*",
     "mocha-lcov-reporter": "*"
