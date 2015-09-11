@@ -1,9 +1,9 @@
-var Loader = require('../');
+var dev = require('../lib/connect');
 var request = require('supertest');
 var connect = require('connect');
 var app = connect();
 app.use(connect.query());
-app.use(Loader.coffee(__dirname));
+app.use(dev.coffee(__dirname));
 
 describe('Loader.coffee', function () {
   it('should 200', function (done) {

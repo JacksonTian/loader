@@ -1,9 +1,9 @@
-var Loader = require('../');
+var dev = require('../lib/connect');
 var request = require('supertest');
 var connect = require('connect');
 var app = connect();
 app.use(connect.query());
-app.use(Loader.less(__dirname));
+app.use(dev.less(__dirname));
 
 describe('Loader.less', function () {
   it('should 200', function (done) {

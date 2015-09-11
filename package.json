@@ -1,6 +1,6 @@
 {
   "name": "loader",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "Assets loader.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "Loader"
   ],
   "bin": {
-    "loader": "bin/build"
+    "loader": "bin/builder"
   },
   "repository": {
     "type": "git",

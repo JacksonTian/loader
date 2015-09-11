@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var path = require('path');
 var fs = require('fs');
-var Loader = require('../');
+var builder = require('../lib/builder');
 
 var argv = process.argv;
 
@@ -20,17 +20,17 @@ var viewsDir = path.join(process.cwd(), argv[2]);
 var baseDir = path.join(process.cwd(), argv[3]);
 
 // scan views folder, get the assets map
-var scaned = Loader.scanDir(viewsDir);
+var scaned = builder.scanDir(viewsDir);
 console.log("Scaned.");
 
 // combo？md5 hash
-var minified = Loader.minify(baseDir, scaned);
+var minified = builder.minify(baseDir, scaned);
 console.log(minified);
 console.log("Compile static assets done.");
 
 // write the assets mapping into assets.json
 var assets = path.join(baseDir, 'assets.json');
 console.log("assets.json is here: " + assets);
-fs.writeFileSync(assets, JSON.stringify(Loader.map(minified)));
+fs.writeFileSync(assets, JSON.stringify(builder.map(minified)));
 console.log("write assets.json done. assets.json: ");
 console.log(fs.readFileSync(assets, 'utf-8'));

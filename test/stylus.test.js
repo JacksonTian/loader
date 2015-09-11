@@ -1,9 +1,9 @@
-var Loader = require('../');
+var dev = require('../lib/connect');
 var request = require('supertest');
 var connect = require('connect');
 var app = connect();
 app.use(connect.query());
-app.use(Loader.stylus(__dirname));
+app.use(dev.stylus(__dirname));
 
 describe('Loader.stylus', function () {
   it('should 200', function (done) {
