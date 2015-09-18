@@ -6,7 +6,7 @@ Node静态资源加载器。该模块通过两个步骤配合完成，代码部�
 # Usage
 ## Installation
 
-```bash
+```sh
 $ npm install loader
 ```
 
@@ -31,20 +31,20 @@ View:
 ### 环境判别
 环境判别由`done`方法的第三个参数决定，如果传入combo值，将决定选用线下版本还是线上版本。如果不传入第三个参数，将由环境变量。如下代码实现：
 
-```
+```js
 process.env.NODE_ENV === 'production'
 ```
 如果不传入combo，需要设置环境，通过以下代码实现：
 
-```
-# 生产环境
-export NODE_ENV="production"
-# 开发环境
-export NODE_ENV="dev"
+```sh
+$ # 生产环境
+$ export NODE_ENV="production"
+$ # 开发环境
+$ export NODE_ENV="dev"
 ```
 可切换进`example`目录运行示例代码：
 
-```
+```sh
 $ npm start
 ```
 
