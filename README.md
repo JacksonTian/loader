@@ -96,8 +96,6 @@ $ ./node_modules/loader-builder/bin/builder <views_dir> <output_dir>
 
 遍历完目录后，将这些映射关系生成为`assets.json`文件，这个文件位于`<output_dir>`指定的目录下。使用时请正确引入该文件。具体请参见`example`目录下的代码示例。
 
-
-
 ## 流程
 ![流程](./figures/flow.png)
 
