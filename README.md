@@ -83,10 +83,12 @@ $ npm start
 }
 ```
 
-如果需要线上执行，需要该对象的传入。而该对象需要通过以下构建脚本来生成
+如果需要线上执行，需要该对象的传入。而该对象需要通过以下构建脚本（loader-builder）来生成：
 
-```
-./node_modules/loader/bin/build <views_dir> <output_dir>
+```sh
+$ builder <views_dir> <output_dir>
+$ # 或者
+$ ./node_modules/loader-builder/bin/builder <views_dir> <output_dir>
 ```
 
 以上脚本将会遍历视图目录中寻找`Loader().js().css().done()`这样的标记，然后得到合并文件与实际文件的关系。如以上的`assets/index.min.js`文件并不一定需要真正存在，进行扫描构建后，会将相关的`js`文件进行编译和合并为一个文件。
@@ -94,67 +96,13 @@ $ npm start
 
 遍历完目录后，将这些映射关系生成为`assets.json`文件，这个文件位于`<output_dir>`指定的目录下。使用时请正确引入该文件。具体请参见`example`目录下的代码示例。
 
+
+
 ## 流程
 ![流程](./figures/flow.png)
 
 ## API
 请参见[API文档](http://doxmate.cool/JacksonTian/loader/api.html)。
-
-## LESS支持
-Loader中支持`.less`文件与普通的`.css`文件没有差别，通过`.css()`加载即可。
-
-```
-<%- Loader("/assets/styles/jqueryplugin.min.css")
-  .css("/assets/styles/jquery.autocomplate.css")
-  .css("/assets/styles/bootstrap.less")
-  .done(assetsMap, prefix, combo) %>
-```
-
-默认情况下会输出`.less`的原始内容，需要借助`Loader.less(root)`中间来拦截`.less`文件的请求，它将自动将其转换为CSS内容。示例如下：
-
-```
-app.use(Loader.less(__dirname)); // Loader.less一定要在静态文件中间件之前，否则.less文件会被静态文件中间件所处理
-app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
-```
-
-在扫描静态文件、合并压缩方面，没有任何改动。
-
-## Stylus支持
-基本同LESS。Loader中支持`.styl`文件与普通的`.css`文件没有差别，通过`.css()`加载即可。
-
-```
-<%- Loader("/assets/styles/jqueryplugin.min.css")
-  .css("/assets/styles/jquery.autocomplate.css")
-  .css("/assets/styles/bootstrap.styl")
-  .done(assetsMap, prefix, combo) %>
-```
-
-默认情况下会输出styl的原始内容，需要借助`Loader.stylus(root)`中间来拦截`.styl`文件的请求，它将自动将其转换为CSS内容。示例如下：
-
-```
-app.use(Loader.stylus(__dirname)); // Loader.stylus一定要在静态文件中间件之前，否则.styl文件会被静态文件中间件所处理
-app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
-```
-
-在扫描静态文件、合并压缩方面，没有任何改动。
-
-## CoffeeScript支持
-基本同LESS。Loader中支持`.coffee`文件与普通的`.js`文件没有差别，通过`.js()`加载即可。
-
-```
-<%- Loader("/assets/home.js")
-  .js("/assets/home.coffee")
-  .done(assetsMap, prefix, combo) %>
-```
-
-默认情况下会输出`.coffee`的原始内容，需要借助`Loader.coffee(root)`中间来拦截`.coffee`文件的请求，它将自动将其转换为JS内容。示例如下：
-
-```
-app.use(Loader.coffee(__dirname)); // Loader.coffee一定要在静态文件中间件之前，否则.coffee文件会被静态文件中间件所处理
-app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 3600000 * 24 * 365 }));
-```
-
-在扫描静态文件、合并压缩方面，没有任何改动。
 
 # License
 [MIT license](https://github.com/JacksonTian/loader/blob/master/MIT-License)

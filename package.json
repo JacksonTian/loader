@@ -18,18 +18,9 @@
       "threshold": 98
     }
   },
-  "dependencies": {
-    "uglify-js": "=2.4.6",
-    "clean-css": "=2.0.2",
-    "less": "=1.7.0",
-    "stylus": "=0.42.3",
-    "coffee-script": "=1.7.1"
-  },
   "devDependencies": {
     "mocha": "*",
     "should": "3.0.x",
-    "supertest": "*",
-    "connect": "2.22.0",
     "istanbul": "*",
     "travis-cov": "*",
     "coveralls": "*",

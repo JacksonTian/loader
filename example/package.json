@@ -9,7 +9,8 @@
   "dependencies": {
     "connect": "*",
     "connect-render": "*",
-    "loader": "0.0.3",
+    "loader": "2.0.0",
+    "loader-builder": "1.0.0",
     "response-patch": "*"
   },
   "repository": "",

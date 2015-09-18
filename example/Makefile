@@ -1,6 +1,6 @@
 build:
 	@npm install
-	@./bin/build views .
+	@./node_modules/loader-builder/bin/builder ./views ./
 	@node app.js
 
 .PHONY: build
