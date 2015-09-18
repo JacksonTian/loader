@@ -28,6 +28,8 @@ View:
   .done(assetsMap, prefix, combo) %>
 ```
 
+在loader-builder/loader-connect/loader-koa的支持下，`.js`方法也可以加载`.coffee`、`.es`类型的文件，`.css`方法可以加载`.less`、`.styl`文件。
+
 ### 环境判别
 环境判别由`done`方法的第三个参数决定，如果传入combo值，将决定选用线下版本还是线上版本。如果不传入第三个参数，将由环境变量。如下代码实现：
 
