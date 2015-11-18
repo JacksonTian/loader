@@ -186,4 +186,17 @@ describe("Asset loader", function () {
       '<link rel="stylesheet" href="http://a.bcdn.com/jqueryplugin.min.hash.css" media="all" />\n');
     process.env.NODE_ENV = nodeEnv;
   });
+
+  it("Loader.img", function () {
+    var url = Loader.img("/assets/images/logo.png", "");
+    url.should.equal('/assets/images/logo.png');
+  });
+
+  it("Loader.img with map", function () {
+    var map = {
+      "/assets/images/logo.png": "/assets/images/logo.hash.png"
+    };
+    var url = Loader.img("/assets/images/logo.png", "", map, true);
+    url.should.equal('/assets/images/logo.hash.png');
+  });
 });
