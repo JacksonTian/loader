@@ -187,16 +187,16 @@ describe("Asset loader", function () {
     process.env.NODE_ENV = nodeEnv;
   });
 
-  it("Loader.img", function () {
-    var url = Loader.img("/assets/images/logo.png", "");
+  it("Loader.file", function () {
+    var url = Loader.file("/assets/images/logo.png").done({}, '');
     url.should.equal('/assets/images/logo.png');
   });
 
-  it("Loader.img with map", function () {
+  it("Loader.file with map", function () {
     var map = {
       "/assets/images/logo.png": "/assets/images/logo.hash.png"
     };
-    var url = Loader.img("/assets/images/logo.png", "", map, true);
+    var url = Loader.file("/assets/images/logo.png").done(map, '', true);
     url.should.equal('/assets/images/logo.hash.png');
   });
 });
