@@ -1,4 +1,4 @@
-loader [![Build Status](https://secure.travis-ci.org/JacksonTian/loader.png?branch=master)](http://travis-ci.org/JacksonTian/loader) [![Coverage Status](https://coveralls.io/repos/JacksonTian/loader/badge.png)](https://coveralls.io/r/JacksonTian/loader)
+loader [![Build Status](https://travis-ci.org/JacksonTian/loader.svg?branch=master)](https://travis-ci.org/JacksonTian/loader) [![Coveralls github](https://img.shields.io/coveralls/github/JacksonTian/loader.svg)](https://coveralls.io/r/JacksonTian/loader)
 ==========================
 
 Node静态资源加载器。该模块通过两个步骤配合完成，代码部分根据环境生成标签。上线时，需要调用minify方法进行静态资源的合并和压缩。
